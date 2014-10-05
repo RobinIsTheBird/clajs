@@ -10,7 +10,7 @@ define([
         };
         var protected = {
             set step (n) {
-                if (Iterator.isInteger(n)) {
+                if (Iterator.isInteger(n) && 0 !== n) {
                     private.step = n;
                     return private.step;
                 }
