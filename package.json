@@ -1,0 +1,43 @@
+{
+  "name": "clajs",
+  "version": "0.1.0",
+  "description": "Fix the JavaScript inheritance mechanism within the constraints of the language",
+  "main": "clajs.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RobinIsTheBird/clajs.git"
+  },
+  "keywords": [
+    "JavaScript",
+    "inheritance",
+    "privacy",
+    "private",
+    "protected",
+    "member",
+    "variables",
+    "prototype",
+    "this",
+    "class",
+    "instance",
+    "instantiate",
+    "js"
+  ],
+  "author": "Robin Schaufler",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/RobinIsTheBird/clajs/issues"
+  },
+  "homepage": "https://github.com/RobinIsTheBird/clajs",
+  "dependencies": {
+    "amdefine": "^0.1.0",
+    "grunt": "^0.4.5",
+    "grunt-contrib-jshint": "^0.10.0",
+    "lodash": "^2.4.1"
+  }
+}
