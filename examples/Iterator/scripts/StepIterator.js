@@ -1,47 +1,49 @@
 if (typeof define !== 'function') { var define = require('amdefine')(module); }
 define([
-    'clajs',
-    'Iterator'
+    '../../../assets/scripts/src/clajs.js',
+    './Iterator.js'
 ], function (clajs, Iterator) {
-    var StepIterator = clajs('StepIterator', Iterator, function (options) {
-        var supr = this.base;
-        var private = {
+    'use strict';
+
+    var StepIterator = clajs('StepIterator', function (options) {
+        var supr = this.supr;
+        var privateProps = {
             step: 1
         };
-        var protected = {
+        var protectedProps = {
             get step () {
-                return private.step;
+                return privateProps.step;
             },
             set step (n) {
-                if (Iterator.isInteger(n) && 0 !== n) {
-                    private.step = n;
-                    return private.step;
+                if (StepIterator.isInteger(n) && 0 !== n) {
+                    privateProps.step = n;
+                    return privateProps.step;
                 }
                 return NaN;
             }
         };
-        var public = {
+        var publicProps = {
             next: function () {
                 var old = supr.cur;
-                supr.cur = old + private.step;
-                return old;
+                supr.cur = undefined === old ? 0 : old + privateProps.step;
+                return supr.cur;
             },
             get step () {
-                return private.step;
+                return privateProps.step;
             }
         };
 
         options = options || {};
         if (Iterator.isInteger(options.step)) {
-            private.step = options.step;
+            privateProps.step = options.step;
         }
             
         // Do setup based on arguments
         return this.instance({
-            protected: protected,
-            public: public
+            protectedProps: protectedProps,
+            publicProps: publicProps
         });
-    });
+    }, Iterator);
 
     StepIterator.isInteger = Iterator.isInteger; // For convenience
 
