@@ -1,51 +1,53 @@
 if (typeof define !== 'function') { var define = require('amdefine')(module); }
 define([
-    'clajs',
-    'StepIterator'
-], function (clajs, Iterator) {
+    '../../../assets/scripts/src/clajs.js',
+    './StepIterator.js'
+], function (clajs, StepIterator) {
+    'use strict';
+
     var randCeil = function (ceil) {
-        return Math.ceil(Math.random) * ceil;
+        return Math.ceil(Math.random() * ceil);
     };
-    var RandomIterator = clajs('RandomIterator', StepIterator, function (options) {
-        var supr = this.base;
-        var private = {
+    var RandomIterator = clajs('RandomIterator', function (options) {
+        var supr = this.supr;
+        var privateProps = {
             ceil: 1
         };
-        var protected = {
+        var protectedProps = {
             get ceil () {
-                return private.ceil;
+                return privateProps.ceil;
             },
             set ceil (n) {
-                if (StepIterator.isInteger(n)) {
-                    private.ceil = n;
-                    return private.ceil;
+                if (RandomIterator.isInteger(n)) {
+                    privateProps.ceil = n;
+                    return privateProps.ceil;
                 }
                 return NaN;
             }
         };
-        var public = {
+        var publicProps = {
             next: function () {
-                supr.step = randCeil(private.ceil);
+                supr.step = randCeil(privateProps.ceil);
                 return supr.next();
             },
             get ceil () {
-                return private.ceil;
+                return privateProps.ceil;
             }
         };
 
         options = options || {};
         if (StepIterator.isInteger(options.ceil)) {
-            private.ceil = options.ceil;
+            privateProps.ceil = options.ceil;
         }
             
         // Do setup based on arguments
         return this.instance({
-            protected: protected,
-            public: public
+            protectedProps: protectedProps,
+            publicProps: publicProps
         });
-    });
+    }, StepIterator);
 
-    RandomIterator.isInteger = Iterator.isInteger; // For convenience
+    RandomIterator.isInteger = StepIterator.isInteger; // For convenience
 
     return RandomIterator;
 });
