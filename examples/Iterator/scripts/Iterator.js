@@ -4,8 +4,6 @@ define([
 ], function (clajs) {
     'use strict';
 
-    console.log('Iterator module');
-
     var Iterator = clajs('Iterator', function () {
         var privateSt = {
             cur: undefined
