@@ -24,7 +24,8 @@ define([
         };
         var publicProps = {
             next: function () {
-                return privateSt.cur = undefined === privateSt.cur ? 0 : 1 +privateSt.cur;
+                privateSt.cur = undefined === privateSt.cur ? 0 : 1 + privateSt.cur;
+                return privateSt.cur;
             },
             get cur () {
                 return privateSt.cur;
