@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>clajs</title>
+		<style>
+			/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+sup {
+   vertical-align: super;
+   font-size: smaller;
+}
+
+sub {
+  vertical-align: sub;
+  font-size: smaller;
+}
+
+/* Generic styles */
+body {
+	background: #f5f5f5;
+  color: #222;
+  font-family: 'Palatino Linotype','Book Antiqua',Palatino,FreeSerif,serif;
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6,
+ul, ol,
+p,
+code, pre,
+hr {
+	line-height: 1.5em;
+	margin: 1.5em 0 0.5em 0;
+}
+
+*:first-child {
+	margin-top: 0;
+}
+
+/* Headers */
+h1, h2, h3, h4, h5, h6 {
+	font-weight: bold;
+}
+
+h1 {
+	font-size: 3.5em;
+}
+
+h2 {
+	font-size: 2.5em;
+}
+
+h3 {
+	font-size: 2em;
+}
+
+h4 {
+	font-size: 1.5em
+}
+
+h5 {
+	font-size: 1.2em;
+}
+
+h6 {
+	font-size: 1em;
+}
+
+/* Lists */
+ul, ol {
+	padding-left: 2em;
+}
+
+ul {
+	list-style-type: disc;	
+}
+
+ol {
+	list-style-type: decimal;
+}
+
+/* Code and pre */
+code, pre {
+	font-family: "Bitstream Vera Sans Mono", "Courier", monospace;
+}
+code {
+	background: none repeat scroll 0 0 #F8F8FF;
+  border: 1px solid #DEDEDE;
+  border-radius: 3px 	;
+  padding: 0 0.2em;
+}
+pre {
+	border-left: 5px solid #eee;
+	margin-left: 2em;	
+	padding-left: 1em;
+}
+pre > code {
+	background: transparent;
+	border: none;
+	padding: 0;
+}
+
+/* Links */
+a {
+  color: #261A3B;
+}
+
+a:visited {
+  color: #261A3B;
+}
+
+/* Inlines */
+strong {
+	font-weight: bold;
+}
+
+em {
+	font-style: italic;
+}
+
+/* Container */
+.container {
+	background: #FFF;
+	padding: 30px 50px;
+	margin: 0 auto;
+	width: 850px;
+}
+
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<h1 id="clajs">clajs</h1>
+<p>Pronounced <em>klæs</em>:
+Fix the JavaScript inheritance mechanism within the constraints of the language</p>
+<p>Programmers choose OOP for the benefits of polymorphism, inheritance, and encapsulation.
+While JavaScript has objects, and polymorphism is fairly easy to achieve,
+despite modern (ES5) JavaScript constructs, achieving inheritance and encapsulation
+simultaneously is neither easy nor pretty.</p>
+<p><em>Clajs</em> is a library which leverages ES5 JavaScript constructs to make both
+inheritance and encapsulation both easy and pretty.</p>
+<p><em>Clajs</em> is <em>not</em></p>
+<ul>
+<li>syntactic sugar</li>
+<li>a framework</li>
+<li>a language extension</li>
+<li>or a new language</li>
+</ul>
+<p>Use <em>Clajs</em> in the browser with <a href="http://requirejs.org/">RequireJS</a>,
+or from <a href="http://nodejs.org/">Node</a>, either with <a href="http://requirejs.org/">RequireJS</a>
+or without, as it uses Node&#39;s <em>require</em> <code>amdefine</code> shim.</p>
+<p><em>Clajs</em> is brand new.
+It provides convenient ways of extending a base clajs and referencing base clajs methods,
+as well as private, protected, and public member variables.
+Mixins are under consideration.</p>
+<h2 id="clajs-tutorial">clajs Tutorial</h2>
+<p>To create a base <em>clajs</em>:</p>
+<pre><code>var BasicFoo = clajs(&#39;BasicFoo&#39;, function (fooSpecificOptions) {
+  var privateProps = { bar: fooSpecificOptions.bar };
+
+  return this.instance({
+    protectedProps: {
+      get bar () { return privateProps.bar; }
+      set bar (b) { privateProps.bar = b; return b; }
+    },
+    publicProps: {
+      greet: function () { console.log(&#39;Hello, &#39; + privateProps.bar); },
+      leave: function () { console.log(&#39;Farewell, &#39; + privateProps.bar); }
+    }
+  });
+});
+</code></pre><p>To instantiate and use that base <em>clajs</em>:</p>
+<pre><code>var myFoo = new BasicFoo({ bar: &#39;World&#39; });
+myFoo.greet(); // Hello, World
+myFoo.leave(); // Farewell, World
+</code></pre><p>To extend our <code>BasicFoo</code> base <em>clajs</em>:</p>
+<pre><code>var BirdFoo = clajs(&#39;BirdFoo&#39;, function (fooSpecificOptions) {
+  var supr = this.supr;
+  supr.bar = &#39;tweet, twitter, chirp, &#39; + supr.bar;
+
+  return this.instance({
+    publicProps: {
+      // greet passes through
+      leave: function () {  
+        supr.leave();
+        console.log(&#39;Flap flap flap&#39;);
+      }
+    }
+  });
+}, BasicFoo);
+</code></pre><p>To instantiate and use the avian extension <em>clajs</em>:</p>
+<pre><code>var myFoo = new BirdFoo({ bar: &#39;World&#39; });
+myFoo.greet(); // Hello, tweet, twitter, chirp, World
+myFoo.leave(); // Farewell, tweet, twitter, chirp, World\nFlap flap flap
+</code></pre><h2 id="clajs-reference">clajs Reference</h2>
+<p>Declare a constructor with <code>clajs</code>:</p>
+<pre><code>function clajs (clajsName, xtor, base)
+</code></pre><p>returns Function, which is the actual constructor for use with <code>new</code>.</p>
+<p>Parameters:</p>
+<ul>
+<li><code>clajsName</code> - String, the name of the <em>clajs</em></li>
+<li><code>xtor</code> - Function, called from the constructor to do the initialization</li>
+<li><code>base</code> - Optional - Function created by calling <code>clajs</code> or options Object</li>
+</ul>
+<h3 id="-xtor-"><code>xtor</code></h3>
+<p>The <code>xtor</code> parameter to <code>clajs</code>:</p>
+<pre><code>function xtor ()
+</code></pre><p>returns an instance of the <em>clajs</em>, as returned by <code>this.instance()</code>.</p>
+<p>Parameters from the <code>new</code> operation are passed through to <code>xtor</code>. </p>
+<p>The <code>this</code> context is created by <code>new</code>, and initialized by <code>clajs</code> as follows:</p>
+<pre><code>{
+  instance: Function - returns an instance of the _clajs_ which must be returned by `xtor`,
+  supr: Object - the prototype of an instance of the `base` _clajs_
+}
+</code></pre><p><code>this.instance</code> takes one parameter, an options object:</p>
+<pre><code>{
+  protectedProps: Object,
+  publicProps: Object
+}
+</code></pre><p>The <code>publicProps</code> object contains all the public methods and properties for the <em>clajs</em>.</p>
+<p>The <code>protectedProps</code> object contains all the protected methods and properties for
+the <em>clajs</em>, that is, methods and properties only available to subclasses of the <em>clajs</em>.</p>
+<h3 id="-base-as-an-options-object-"><code>base</code> as an options Object:</h3>
+<pre><code>{
+  base: Function created by `clajs`,
+  factory: Function that returns an instance of base, given parameters passed through from `new`
+}
+</code></pre><p>Use the options Object form of <code>base</code> if the <code>base</code> constructor takes different parameters
+from the <em>clajs</em> being defined.</p>
+<p><code>clajs</code> must instantiate the base <em>clajs</em> in order to instantiate the <em>clajs</em>,
+if the <em>clajs</em> extends a base <em>clajs</em>.
+If only the <code>base</code> constructor function is passed to <code>clajs</code>,
+it will be instantiated with the same arguments passed to <code>new</code>.</p>
+<h2 id="examples">Examples</h2>
+<p>Please see <code>./examples/Iterator/scripts/iterate.js</code>
+and the three clajses it requires for a runnable example
+that&#39;s a bit more functional than the BasicFoo and BirdFoo above.</p>
+<p>Go ahead and run iterate.js with node-debug to see how it works.</p>
+<h2 id="planned-work">Planned Work</h2>
+<ul>
+<li>Install yuidocs and generate documentation from the code source</li>
+<li>Shore up the README</li>
+<li>Add grunt tasks to generate documentation html</li>
+<li>Port the RobinIsTheBird protoExplorer project to clajs.js</li>
+<li>Add a test framework</li>
+<li>Write formal tests for node and phantom</li>
+<li>Add grunt tasks to produce downloadable distributions for browser and node</li>
+<li>Make available through npm</li>
+<li>Organize an issue tracking system</li>
+<li>Set up to accept code contributions</li>
+</ul>
+
+		</div>
+
+		<script></script>
+	</body>
+</html>
