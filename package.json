@@ -38,6 +38,7 @@
     "amdefine": "^0.1.0",
     "grunt": "^0.4.5",
     "grunt-contrib-jshint": "^0.10.0",
-    "lodash": "^2.4.1"
+    "lodash": "^2.4.1",
+    "markdown-html": "0.0.8"
   }
 }
