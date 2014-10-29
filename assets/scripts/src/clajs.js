@@ -61,14 +61,15 @@ define([], function () {
             var suprFactory = baseInstanceFactory &&
                 function baseFactory () {
                     var baseInstance = Object.create(base.prototype);
-                    return baseInstanceFactory.apply(baseInstance, arguments).prototype;
+                    baseInstance = baseInstanceFactory.apply(baseInstance, arguments);
+                    return Object.getPrototypeOf(baseInstance);
                 } ||
                 !!base &&
                     function baseInstanceFactory () {
                         var baseInstance = Object.create(base.prototype);
                         // this.rebase tells the base xtor the outermost clajs that extends it.
                         baseInstance.rebase = this.rebase || actualXtor;
-                        base.apply(baseInstance, arguments);
+                        baseInstance = base.apply(baseInstance, arguments);
                         return Object.getPrototypeOf(baseInstance);
                     }.bind(this) ||
                     function rebaseInstanceFactory () {
